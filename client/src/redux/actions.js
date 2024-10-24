@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const apiCall =
-  (request, success, error, route, formData) => async (action) => {
+  (request, success, error, reset, route,  formData) => async (action) => {
     try {
       action({
         type: request,
@@ -51,6 +51,12 @@ const apiCall =
         type: error,
         message: "NetWork Error , Server Down!",
       });
+    } finally{
+      setTimeout(()=>{action({
+        type: reset,
+        message:null
+      })},2000)
+      
     }
   };
 
@@ -63,4 +69,4 @@ const apiCall =
 
 export const userDataRequest = () => apiCall("userDataRequest", "userDataSuccess", "userDataError", "getUser");
 export const productDataRequest = () =>apiCall("productDataRequest","productDataSuccess","productDataError","getProducts");
-export const registerRequest = (formData) =>apiCall("registerRequest","registerSuccess","registerError","api/v1/user/register",formData);
+export const registerRequest = (formData) =>apiCall("registerRequest","registerSuccess","registerError","registerReset","api/v1/user/register",formData);

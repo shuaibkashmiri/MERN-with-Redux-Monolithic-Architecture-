@@ -68,6 +68,9 @@ export const registerReducer = createReducer({}, (builder) => {
       .addCase("registerError", (state, action) => {
         state.loading = false;
         state.message =  action.message;
+      }).addCase("registerReset",(state,action)=>{
+        state.loading =false;
+        state.message =action.message;
       })
    
 });
